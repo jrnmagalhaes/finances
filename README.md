@@ -120,6 +120,20 @@ docker compose exec backend npm uninstall <package>
 docker compose exec frontend bun remove <package>
 ```
 
+### Resetting node_modules
+
+Docker named volumes are only populated from the image on first creation. If you rebuild the image but packages are still stale or missing, the volume needs to be recreated. Use the helper scripts in the project root:
+
+```bash
+# Reset frontend node_modules
+./reset-frontend-modules.sh
+
+# Reset backend node_modules
+./reset-backend-modules.sh
+```
+
+Each script stops the containers, removes the relevant volume, and rebuilds that service. MySQL data is not affected.
+
 ---
 
 ## Database
@@ -194,6 +208,8 @@ finances/
 │   ├── vite.config.ts
 │   └── package.json
 ├── docker-compose.yml
-├── .env.example           Template — copy to .env
+├── .env.example               Template — copy to .env
+├── reset-frontend-modules.sh  Recreate frontend node_modules volume
+├── reset-backend-modules.sh   Recreate backend node_modules volume
 └── README.md
 ```
