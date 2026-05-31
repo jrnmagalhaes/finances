@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-import { authService } from '../../services/auth/authService';
+import { authStorage } from '../../lib/auth/authStorage';
 
 interface AuthContextValue {
   isAuthenticated: boolean;
@@ -10,15 +10,15 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(() => authService.getToken());
+  const [token, setToken] = useState<string | null>(() => authStorage.getToken());
 
   const login = (newToken: string) => {
-    authService.setToken(newToken);
+    authStorage.setToken(newToken);
     setToken(newToken);
   };
 
   const logout = () => {
-    authService.removeToken();
+    authStorage.removeToken();
     setToken(null);
   };
 

@@ -5,7 +5,7 @@ const InputForm = ({ label, placeholder, ...props }: InputProps) => {
   const { getFieldState, formState } = useFormContext();
   const { error } = getFieldState(props.name!, formState);
   return (
-    <div>
+    <div className="space-y-2">
       <Input label={label} placeholder={placeholder} {...props} />
       <FormMessage message={error?.message} />
     </div>

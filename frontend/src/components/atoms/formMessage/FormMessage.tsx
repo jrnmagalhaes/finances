@@ -1,7 +1,7 @@
 
 const FormMessage = ({ message }: { message?: string }) => {
   return (
-    <p className="color-error">
+    <p className="text-txt-error">
       {message}
     </p>
   );
