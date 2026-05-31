@@ -1,16 +1,15 @@
-import { useId } from "react";
+import { useId, type InputHTMLAttributes } from "react";
 
-type InputProps = {
+export type InputProps = {
   label?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: "text" | "password";
   name?: string;
   className?: string;
-}
+} & InputHTMLAttributes<HTMLInputElement>
 
-const Input = ({ label, placeholder, value, onChange, type, className, name }: InputProps) => {
+const Input = ({ label, placeholder, value, onChange, type, className, name, ...props }: InputProps) => {
   const id = useId();
   return (
     <div className={`space-y-2 ${className} w-full`}>
@@ -22,6 +21,7 @@ const Input = ({ label, placeholder, value, onChange, type, className, name }: I
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...props}
       />
     </div>
   );

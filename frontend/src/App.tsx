@@ -1,20 +1,27 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { DesignSystemShowcase, Home, Login } from "./components/pages";
-import './index.css';
+import { ProtectedRoute, PublicOnlyRoute } from "./components/molecules";
 import { AppContainer } from "./components/templates";
+import { AuthProvider } from "./context";
+import './index.css';
 
 function App() {
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppContainer />}>
-          <Route path="login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="ui" element={<DesignSystemShowcase />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AppContainer />}>
+            <Route element={<PublicOnlyRoute />}>
+              <Route path="login" element={<Login />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route index element={<Home />} />
+              <Route path="ui" element={<DesignSystemShowcase />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

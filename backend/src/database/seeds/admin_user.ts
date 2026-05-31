@@ -1,11 +1,12 @@
 import type { Knex } from "knex";
+import bcrypt from 'bcrypt';
 
 export async function seed(knex: Knex): Promise<void> {
-    // Deletes ALL existing entries
     await knex("users").del();
 
-    // Inserts seed entries
+    const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
+
     await knex("users").insert([
-        { id: 1, name: "Admin", email: process.env.ADMIN_LOGIN, password: process.env.ADMIN_PASSWORD },
+        { id: 1, name: "Admin", email: process.env.ADMIN_LOGIN, password: hashed },
     ]);
 };
