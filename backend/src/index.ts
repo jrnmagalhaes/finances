@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import db from './database/knex.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,4 +12,5 @@ app.get('/', (req: Request, res: Response) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
+    db.raw('SELECT 1').then(() => console.log('DB connected')).catch(console.error);
 });
